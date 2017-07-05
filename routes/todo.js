@@ -15,7 +15,7 @@ export default function(server) {
 				next()
 			})
 			.catch(err => {
-				res.send(500, err.toString())
+				res.send(500, err)
 			})
 
 	})
@@ -39,7 +39,7 @@ export default function(server) {
 				next()
 			})
 			.catch(err => {
-				res.send(500, err.toString())
+				res.send(500, err)
 			})
 
 	})
@@ -55,7 +55,7 @@ export default function(server) {
 				next()
 			})
 			.catch(err => {
-				res.send(500, err.toString())
+				res.send(500, err)
 			})
 
 	})
@@ -76,7 +76,7 @@ export default function(server) {
 				next()
 			})
 			.catch(err => {
-				res.send(500, err.toString())
+				res.send(500, err)
 			})
 
 	})
@@ -92,7 +92,7 @@ export default function(server) {
 				next()
 			})
 			.catch(err => {
-				res.send(500, err.toString())
+				res.send(500, err)
 			})
 
 	})
