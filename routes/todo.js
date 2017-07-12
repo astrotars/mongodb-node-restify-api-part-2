@@ -49,9 +49,9 @@ module.exports = function(server) {
 	 */
 	server.get('/users/:user_id/todos/:todo_id', (req, res, next) => {
 
-		Todo.findById(req.params.user_id)
-			.then(user => {
-				res.send(200, user)
+		Todo.findById(req.params.todo_id)
+			.then(todo => {
+				res.send(200, todo)
 				next()
 			})
 			.catch(err => {

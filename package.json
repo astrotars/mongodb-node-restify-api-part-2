@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Nick Parsons <nick.parsons@mongodb.com>",
   "license": "ISC",
   "dependencies": {
     "mongoose": "^4.11.1",
