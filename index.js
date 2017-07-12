@@ -1,16 +1,13 @@
 /**
  * Module Dependencies
  */
-import restify from 'restify'
-import mongoose from 'mongoose'
-
-import config from './config'
+const restify = require('restify'),
+	  mongoose = require('mongoose')
 
 /**
- * Routes
+ * Config
  */
-import mountUserRoutes from './routes/user'
-import mountTodoRoutes from './routes/todo'
+const config = require('./config')
 
 /**
  * Initialize Server
@@ -62,8 +59,8 @@ server.listen(config.port, () => {
 
 	db.once('open', () => {
 
-		mountUserRoutes(server)
-		mountTodoRoutes(server)
+		require('./routes/user')(server)
+		require('./routes/todo')(server)
 
 		console.log(`Server is listening on port ${config.port}`)
 

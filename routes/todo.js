@@ -1,6 +1,6 @@
-import { Todo } from '../models/todo'
+const Todo = require('../models/todo')
 
-export default function(server) {
+module.exports = function(server) {
 
 	/**
 	 * Create

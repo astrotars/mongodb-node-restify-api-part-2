@@ -1,9 +1,9 @@
-import mongoose, { Schema } from 'mongoose'
-import timestamps from 'mongoose-timestamp'
+const mongoose   = require('mongoose'),
+	  timestamps = require('mongoose-timestamp')
 
-export const TodoSchema = new Schema({
+const TodoSchema = new mongoose.Schema({
 	userId: {
-		type: Schema.Types.ObjectId,
+		type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         index: true,
         required: true,
@@ -26,4 +26,4 @@ export const TodoSchema = new Schema({
 
 TodoSchema.plugin(timestamps)
 
-export const Todo = mongoose.model('Todo', TodoSchema)
+module.exports = exports = mongoose.model('Todo', TodoSchema)

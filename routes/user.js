@@ -1,7 +1,7 @@
-import { User } from '../models/user'
-import { Todo } from '../models/todo'
+const User = require('../models/user'),
+	  Todo = require('../models/todo')
 
-export default function(server) {
+module.exports = function(server) {
 
 	/**
 	 * Create

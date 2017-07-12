@@ -1,7 +1,7 @@
-import mongoose, { Schema } from 'mongoose'
-import timestamps from 'mongoose-timestamp'
+const mongoose   = require('mongoose'),
+	  timestamps = require('mongoose-timestamp')
 
-export const UserSchema = new Schema({
+const UserSchema = new mongoose.Schema({
 	email: {
 		type: String,
 		trim: true,
@@ -25,4 +25,4 @@ export const UserSchema = new Schema({
 
 UserSchema.plugin(timestamps)
 
-export const User = mongoose.model('User', UserSchema)
+module.exports = exports = mongoose.model('User', UserSchema)
