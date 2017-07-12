@@ -48,9 +48,9 @@ module.exports = function(server) {
 	/**
 	 * Read
 	 */
-	server.get('/users/:user_id', (req, res, next) => {
+	server.get('/users/:userId', (req, res, next) => {
 
-		User.findById(req.params.user_id)
+		User.findById(req.params.userId)
 			.then(user => {
 				res.send(200, user)
 				next()
@@ -64,14 +64,14 @@ module.exports = function(server) {
 	/**
 	 * Update
 	 */
-	server.put('/users/:user_id', (req, res, next) => {
+	server.put('/users/:userId', (req, res, next) => {
 
 		let data = req.body || {},
 			opts = {
                 new: true
 			}
 
-		User.findByIdAndUpdate({ _id: req.params.user_id }, data, opts)
+		User.findByIdAndUpdate({ _id: req.params.userId }, data, opts)
 			.then(user => {
 				res.send(200, user)
 				next()
@@ -85,9 +85,9 @@ module.exports = function(server) {
 	/**
 	 * Delete
 	 */
-	server.del('/users/:user_id', (req, res, next) => {
+	server.del('/users/:userId', (req, res, next) => {
 
-		const userId = req.params.user_id
+		const userId = req.params.userId
 
 		User.findOneAndRemove({ _id: userId })
 			.then(() => {

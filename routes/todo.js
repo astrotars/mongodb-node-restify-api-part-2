@@ -5,9 +5,9 @@ module.exports = function(server) {
 	/**
 	 * Create
 	 */
-	server.post('/users/:user_id/todos', (req, res, next) => {
+	server.post('/users/:userId/todos', (req, res, next) => {
 
-		let data = Object.assign({}, { userId: req.params.user_id }, req.body) || {}
+		let data = Object.assign({}, { userId: req.params.userId }, req.body) || {}
 
 		Todo.create(data)
 			.then(task => {
@@ -23,19 +23,19 @@ module.exports = function(server) {
 	/**
 	 * List
 	 */
-	server.get('/users/:user_id/todos', (req, res, next) => {
+	server.get('/users/:userId/todos', (req, res, next) => {
 
 		let limit = parseInt(req.query.limit, 10) || 10, // default limit to 10 docs
             skip  = parseInt(req.query.skip, 10) || 0, // default skip to 0 docs
-            query = req.query || {}
+			query = req.params || {}
 
-        // remove skip and limit from query to avoid false querying
+        // remove skip and limit from data to avoid false querying
         delete query.skip
         delete query.limit
 
 	    Todo.find(query).skip(skip).limit(limit)
-			.then(users => {
-				res.send(200, users)
+			.then(tasks => {
+				res.send(200, tasks)
 				next()
 			})
 			.catch(err => {
@@ -47,9 +47,9 @@ module.exports = function(server) {
 	/**
 	 * Get
 	 */
-	server.get('/users/:user_id/todos/:todo_id', (req, res, next) => {
+	server.get('/users/:userId/todos/:todoId', (req, res, next) => {
 
-		Todo.findById(req.params.todo_id)
+		Todo.findOne({ userId: req.params.userId, _id: req.params.todoId })
 			.then(todo => {
 				res.send(200, todo)
 				next()
@@ -63,14 +63,14 @@ module.exports = function(server) {
 	/**
 	 * Update
 	 */
-	server.put('/users/:user_id/todos/:todo_id', (req, res, next) => {
+	server.put('/users/:userId/todos/:todoId', (req, res, next) => {
 
 		let data = req.body || {},
 			opts = {
                 new: true
 			}
 
-		Todo.findByIdAndUpdate({ _id: req.params.todo_id }, data, opts)
+		Todo.update({ userId: req.params.userId, _id: req.params.todoId }, data, opts)
 			.then(user => {
 				res.send(200, user)
 				next()
@@ -84,9 +84,9 @@ module.exports = function(server) {
 	/**
 	 * Delete
 	 */
-	server.del('/users/:user_id/todos/:todo_id', (req, res, next) => {
+	server.del('/users/:userId/todos/:todoId', (req, res, next) => {
 
-		Todo.findOneAndRemove({ _id: req.params.todo_id })
+		Todo.findOneAndRemove({ userId: req.params.userId, _id: req.params.todoId })
 			.then(() => {
 				res.send(204)
 				next()
