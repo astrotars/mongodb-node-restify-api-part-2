@@ -1,3 +1,4 @@
+const User = require('../models/user')
 const Todo = require('../models/todo')
 
 module.exports = function(server) {
@@ -9,13 +10,25 @@ module.exports = function(server) {
 
 		let data = Object.assign({}, { userId: req.params.userId }, req.body) || {}
 
-		Todo.create(data)
-			.then(task => {
-				res.send(200, task)
-				next()
-			})
-			.catch(err => {
-				res.send(500, err)
+		User.findById(data.userId)
+			.then(user => {
+
+				if (!user) {
+					res.send(404)
+					next()
+				}
+
+				Todo.create(data)
+					.then(task => {
+						res.send(200, task)
+						next()
+					})
+					.catch(err => {
+						res.send(500, err)
+					})
+
+			}).catch(err => {
+				res.send(500);
 			})
 
 	})
