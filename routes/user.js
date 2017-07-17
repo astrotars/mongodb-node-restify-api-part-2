@@ -11,8 +11,8 @@ module.exports = function(server) {
 		let data = req.body || {}
 
 		User.create(data)
-			.then(task => {
-				res.send(200, task)
+			.then(user => {
+				res.send(200, user)
 				next()
 			})
 			.catch(err => {
@@ -52,8 +52,15 @@ module.exports = function(server) {
 
 		User.findById(req.params.userId)
 			.then(user => {
+
+				if (!user) {
+					res.send(404)
+					next()
+				}
+
 				res.send(200, user)
 				next()
+				
 			})
 			.catch(err => {
 				res.send(500, err)
@@ -73,8 +80,15 @@ module.exports = function(server) {
 
 		User.findByIdAndUpdate({ _id: req.params.userId }, data, opts)
 			.then(user => {
+
+				if (!user) {
+					res.send(404)
+					next()
+				}
+
 				res.send(200, user)
 				next()
+
 			})
 			.catch(err => {
 				res.send(500, err)
@@ -90,7 +104,12 @@ module.exports = function(server) {
 		const userId = req.params.userId
 
 		User.findOneAndRemove({ _id: userId })
-			.then(() => {
+			.then((user) => {
+
+				if (!user) {
+					res.send(404)
+					next()
+				}
 
 				// remove associated todos to avoid orphaned data
 				Todo.deleteMany({ _id: userId })

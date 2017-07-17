@@ -35,8 +35,10 @@ module.exports = function(server) {
 
 	    Todo.find(query).skip(skip).limit(limit)
 			.then(tasks => {
+
 				res.send(200, tasks)
 				next()
+
 			})
 			.catch(err => {
 				res.send(500, err)
@@ -51,8 +53,15 @@ module.exports = function(server) {
 
 		Todo.findOne({ userId: req.params.userId, _id: req.params.todoId })
 			.then(todo => {
+
+				if (!todo) {
+					res.send(404)
+					next()
+				}
+
 				res.send(200, todo)
 				next()
+
 			})
 			.catch(err => {
 				res.send(500, err)
@@ -72,8 +81,15 @@ module.exports = function(server) {
 
 		Todo.update({ userId: req.params.userId, _id: req.params.todoId }, data, opts)
 			.then(user => {
+
+				if (!user) {
+					res.send(404)
+					next()
+				}
+
 				res.send(200, user)
 				next()
+
 			})
 			.catch(err => {
 				res.send(500, err)
@@ -87,9 +103,16 @@ module.exports = function(server) {
 	server.del('/users/:userId/todos/:todoId', (req, res, next) => {
 
 		Todo.findOneAndRemove({ userId: req.params.userId, _id: req.params.todoId })
-			.then(() => {
+			.then((todo) => {
+
+				if (!todo) {
+					res.send(404)
+					next()
+				}
+
 				res.send(204)
 				next()
+
 			})
 			.catch(err => {
 				res.send(500, err)
